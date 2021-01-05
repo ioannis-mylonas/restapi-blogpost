@@ -1,10 +1,10 @@
-package com.ioannismylonas.test1;
+package com.ioannismylonas.test2;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class Test1ApplicationTests {
+class Test2ApplicationTests {
 
 	@Test
 	void contextLoads() {

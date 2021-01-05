@@ -4,10 +4,10 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import app.dao.IContaDAO;
 import app.model.Conta;
+import app.exception.ContaNotFoundException;
 
 @Service
 public class ContaService implements IContaService {
@@ -16,32 +16,27 @@ public class ContaService implements IContaService {
   private IContaDAO contaDAO;
 
   @Override
-  @Transactional
   public List<Conta> getContas() {
-    return contaDAO.getContas();
+    return contaDAO.findAll();
   }
 
   @Override
-  @Transactional
   public void saveConta(Conta obj) {
-    contaDAO.saveConta(obj);
+    contaDAO.saveAndFlush(obj);
   }
 
   @Override
-  @Transactional
   public Conta getConta(Long id) {
-    return contaDAO.getConta(id);
+    return contaDAO.findById(id).orElseThrow(ContaNotFoundException::new);
   }
 
   @Override
-  @Transactional
   public void deleteConta(Long id) {
-    contaDAO.deleteConta(id);
+    contaDAO.deleteById(id);
   }
 
   @Override
-  @Transactional
   public void deleteContas() {
-    contaDAO.deleteContas();
+    contaDAO.deleteAllInBatch();
   }
 }

@@ -28,51 +28,43 @@ public class ContaController {
 
   @Autowired
   private IContaService contaService;
-
+  
   @GetMapping("/conta")
   public List<Conta> getConta() {
     return contaService.getContas();
   }
-
+  
   @GetMapping("/conta/{id}")
   public Conta getContaId(@PathVariable Long id) {
-    Conta conta = contaService.getConta(id);
-    if (conta == null) // Se nenhuma conta foi encontrada
-      throw new ResponseStatusException(HttpStatus.NOT_FOUND); // Mostrar que nenhuma conta foi encontrada
-
-    return conta;
-
+    return contaService.getConta(id);
   }
-
+  
   @PostMapping("/conta")
   public void postConta(@Valid @RequestBody Conta conta, BindingResult bindingResult) {
     if (bindingResult.hasErrors()) // Se existirem erros na validação
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST); // Mostrar que há erro no pedido
-
+    
     contaService.saveConta(conta); // Caso contrário, salvar conta
-
   }
-
+  
   @PutMapping("/conta/{id}")
-  public void putConta(@PathVariable Long id, @Valid @RequestBody Conta conta,
-    BindingResult bindingResult) {
+  public void putConta(@PathVariable Long id, @Valid @RequestBody Conta conta, BindingResult bindingResult) {
     Conta alvo = contaService.getConta(id);
-
+    
     if (alvo == null) // Se o ID não pertence a nenhuma conta
       throw new ResponseStatusException(HttpStatus.NOT_FOUND); // Mostrar que nenhuma conta foi encontrada
-
+    
     if (bindingResult.hasErrors()) // Se existirem erros na validação
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST); // Mostrar que há erro no pedido
-
+    
     alvo.setNome(conta.getNome());
     alvo.setEmail(conta.getEmail());
     alvo.setCpf(conta.getCpf());
     alvo.setDataNascimento(conta.getDataNascimento());
-
+    
     contaService.saveConta(alvo);
-
   }
-
+  
   @DeleteMapping("/conta/{id}")
   public void deleteContaId(@PathVariable Long id) {
     contaService.deleteConta(id);

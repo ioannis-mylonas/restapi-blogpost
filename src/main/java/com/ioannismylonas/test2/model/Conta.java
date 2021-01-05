@@ -92,7 +92,7 @@ public class Conta {
   public LocalDate getDataNascimento() {
     return this.dataNascimento;
   }
-  
+    
   @Override
   public String toString() {
     return "Conta(id=" + this.id + ", nome='" + this.nome + "', email='" + this.email + "', cpf='" + this.cpf + "', dataNascimento='" + this.dataNascimento + "')";
